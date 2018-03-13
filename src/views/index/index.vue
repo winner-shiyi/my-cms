@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <div class="demo">
-      我的第一行文字sdfsf
+      我的第一行文字
       <el-button type="success" @click="clickFn">成功按钮</el-button>
     </div>
   </div>
