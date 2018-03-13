@@ -3,6 +3,9 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const serverConfig = require('../server.config')
+const targetServer = serverConfig[process.env.SERVER_TARGET]
+const chalk = require('chalk')
 
 module.exports = {
   dev: {
@@ -10,7 +13,18 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    // 配置代理请求，可以把请求代理到后端服务器
+    proxyTable: {
+      '/api': {
+        target: targetServer.target,
+        changeOrigin: true,
+        pathRewrite: function(path, req) {
+          let _path = path.replace('/api', targetServer.pathRewrite)
+          console.log(chalk.black.bgGreen.bold('proxy to:'), chalk.yellow(targetServer.target + _path))
+          return _path
+        },
+      }
+    }, 
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
