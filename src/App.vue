@@ -1,15 +1,19 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <CmsLayout>
+      <router-view/>
+    </CmsLayout>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
+import CmsLayout from './views/layout/layout.vue'
 
 export default {
   name: 'App',
+  components: {
+    CmsLayout,
+  },
 }
 </script>
 

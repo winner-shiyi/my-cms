@@ -6,6 +6,13 @@ const routes = [
     meta: { requiresAuth: true },
     component: resolve => require(['../../views/index/index.vue'], resolve),
   },
+  {
+    path: '/home',
+    name: 'home',
+    // ????
+    meta: { requiresAuth: true },
+    component: resolve => require(['../../views/home/home.vue'], resolve),
+  },
 ]
 
 export default routes
