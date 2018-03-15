@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <ul>
+      <li v-for="(item, key) in list" :key="key">sdfsf{{item}}</li>
+    </ul>
   </div>
 </template>
 
@@ -8,6 +11,7 @@ export default {
   data() {
     return {
       title: '我是home',
+      list: [4, 5, 7],
     }
   },
 }

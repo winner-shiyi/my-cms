@@ -1,12 +1,11 @@
 <template>
   <section class="cms-layout">
     <el-container>
-      <el-header>Header</el-header>
+      <el-header><slot name="header">header</slot></el-header>
       <el-container>
-        <el-aside width="200px">Aside</el-aside>
+        <el-aside width="200px"><slot name="aside">Aside</slot></el-aside>
         <el-container>
-          <el-main>Main</el-main>
-          <el-footer>Footer</el-footer>
+          <el-main><slot name="main">Main</slot></el-main>
         </el-container>
       </el-container>
     </el-container>

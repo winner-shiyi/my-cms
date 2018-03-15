@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <div class="demo">
-      我的第一行文字
+      登录页面
       <el-button type="success" @click="clickFn">成功按钮</el-button>
     </div>
   </div>
@@ -14,7 +14,7 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      msg: 'Welcome to Your Vue hahaha, now',
+      msg: '登录页面',
     }
   },
   methods: {
