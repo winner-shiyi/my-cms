@@ -21,9 +21,10 @@ export default {
   },
 }
 </script>
+
 <style lang="stylus">
-  @import "./init.styl"
+   @import "./init.styl";
   .cms-layout{
-    width 100%
+    width:100%
   }
 </style>
