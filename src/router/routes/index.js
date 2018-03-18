@@ -10,7 +10,7 @@ const routes = [
     name: 'login',
     // 用来表示改页面是否需要登录
     meta: { requiresAuth: true },
-    component: resolve => require(['../../views/login/index.vue'], resolve),
+    component: resolve => require(['../../views/login/login.vue'], resolve),
   },
   {
     path: '/home',
@@ -20,7 +20,7 @@ const routes = [
       {
         path: '/',
         name: 'home.index',
-        component: resolve => require(['../../views/home/index.vue'], resolve),
+        component: resolve => require(['../../views/home/home.vue'], resolve),
       },
       {
         path: 'create',

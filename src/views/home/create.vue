@@ -1,8 +1,51 @@
 <template>
-  <div class="home">
-    <ul>
-      <li v-for="(item, key) in list" :key="key">创建页面{{item}}</li>
-    </ul>
+  <div class="cms-create">
+    <div class="title">添加页面</div>
+    <el-form :model="cmsPageValidateForm" ref="cmsPageValidateForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item
+        label="项目名称"
+        prop="projectName"
+        :rules="[
+          { required: true, message: '项目名称不能为空', trigger: 'change' },
+          { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur, change' }
+        ]"
+      >
+         <el-select
+          v-model="cmsPageValidateForm.projectName"
+          filterable
+          allow-create
+          default-first-option
+          clearable
+          placeholder="请选择或新增项目">
+          <el-option
+            v-for="item in options5"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        class="page-item"
+        label="页面名称"
+        prop="pageName"
+        :rules="[
+          { required: true, message: '页面名称不能为空', trigger: 'blur' },
+          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur, change' }
+        ]"
+      >
+        <el-input
+          v-model="cmsPageValidateForm.pageName"
+          placeholder="最多支持20个字"
+          clearable
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('cmsPageValidateForm')">提交</el-button>
+        <el-button @click="resetForm('cmsPageValidateForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -12,10 +55,57 @@ export default {
     return {
       title: '我是home',
       list: [4, 5, 7],
+      cmsPageValidateForm: {
+        pageName: '',
+        projectName: '',
+      },
+      options5: [{
+        value: 'HTML',
+        label: 'HTML',
+      }, {
+        value: 'CSS',
+        label: 'CSS',
+      }, {
+        value: 'JavaScript',
+        label: 'JavaScript',
+      }],
+      // value10: [],
     }
+  },
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
   },
 }
 </script>
 
 <style lang="stylus">
+  .cms-create{
+    background-color #fff;
+    height  500px
+    .title{
+      height 68px
+      line-height 68px
+      margin 0 10px
+      border-bottom 1px solid #e5e8ed
+      font-size 16px
+    }
+    .el-form{
+      padding-top 20px
+    }
+    .page-item{
+      width 440px
+    }
+  }
 </style>

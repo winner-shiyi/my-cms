@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import Layout from './layout/main.vue'
-import Aside from './aside/main.vue'
-import Header from './header/main.vue'
+import Layout from './layout/layout.vue'
+import Aside from './aside/aside.vue'
+import Header from './header/header.vue'
 import Main from './main/main.vue'
-import Footer from './footer/main.vue'
+import Footer from './footer/footer.vue'
 
 Vue.component('cms-layout', Layout)
 Vue.component('cms-aside', Aside)
