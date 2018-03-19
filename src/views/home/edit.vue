@@ -11,19 +11,37 @@
                   <div class="icon-box">
                     <i class="icon-cms-search"></i>
                   </div>
-                  <span class="name">文本</span>
+                  <span class="name">搜索栏</span>
                 </li>
                 <li class="grid-item">
                   <div class="icon-box">
                     <i class="icon-cms-banner"></i>
                   </div>
-                  <span class="name">文本</span>
+                  <span class="name">轮播图</span>
+                </li>
+                <li class="grid-item">
+                  <div class="icon-box">
+                    <i class="icon-cms-ad"></i>
+                  </div>
+                  <span class="name">图片列表</span>
                 </li>
                 <li class="grid-item">
                   <div class="icon-box">
                     <i class="icon-cms-type"></i>
                   </div>
-                  <span class="name">文本</span>
+                  <span class="name">类型</span>
+                </li>
+                <li class="grid-item">
+                  <div class="icon-box">
+                    <i class="icon-cms-text"></i>
+                  </div>
+                  <span class="name">分割栏</span>
+                </li>
+                <li class="grid-item">
+                  <div class="icon-box">
+                    <i class="icon-cms-shop"></i>
+                  </div>
+                  <span class="name">商品列表</span>
                 </li>
               </ul>
             </div>
@@ -32,12 +50,59 @@
         <div class="mobile-box">
           <div class="mobile-content">
             <div class="header">
-              <span class="name">魏娜项目<i class="el-icon-edit"></i></span>
+              <span class="name">魏娜的模板<i class="el-icon-edit"></i></span>
             </div>
           </div>
         </div>
         <div class="config-box">
-        配置
+          <h2 class="title">页面配置</h2>
+          <div v-if="isEditPageName">
+            <el-form :model="cmsPageValidateForm" ref="cmsPageValidateForm" label-width="100px" class="demo-ruleForm">
+              <el-form-item
+                label="项目名称"
+                prop="projectName"
+                :rules="[
+                  { required: true, message: '项目名称不能为空', trigger: 'change' },
+                  { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur, change' }
+                ]"
+              >
+                <el-select
+                  v-model="cmsPageValidateForm.projectName"
+                  filterable
+                  allow-create
+                  default-first-option
+                  clearable
+                  placeholder="请选择或新增项目">
+                  <el-option
+                    v-for="item in options5"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                class="page-item"
+                label="页面名称"
+                prop="pageName"
+                :rules="[
+                  { required: true, message: '页面名称不能为空', trigger: 'blur' },
+                  { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur, change' }
+                ]"
+              >
+                <el-input
+                  v-model="cmsPageValidateForm.pageName"
+                  placeholder="最多支持20个字"
+                  clearable
+                >
+                </el-input>
+              </el-form-item>
+              <!-- <el-form-item>
+                <el-button type="primary" @click="submitForm('cmsPageValidateForm')">提交</el-button>
+                <el-button @click="resetForm('cmsPageValidateForm')">重置</el-button>
+              </el-form-item> -->
+            </el-form>
+          </div>
         </div>
       </div>
     </div>
@@ -47,20 +112,31 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      isEditPageName: true,
+      cmsPageValidateForm: {
+        pageName: '',
+        projectName: '',
+      },
+      options5: [{
+        value: 'HTML',
+        label: 'HTML',
+      }, {
+        value: 'CSS',
+        label: 'CSS',
+      }, {
+        value: 'JavaScript',
+        label: 'JavaScript',
+      }],
+    }
+  },
+}
+</script>
 
 <style lang="stylus">
-  .cms-eidt-header{
-    background-color #fff
-    // line-height 20px;
-    // padding 15px 20px;
-    margin-bottom 20px
-    display flex
-    align-items center
-    height 30px
-    .item{
-      flex 1
-    }
-  }
   .cms-edit-body{
     position relative
     overflow-y hidden
@@ -81,8 +157,8 @@
       }
       .title{
         font-size 16px
-        height 40px
-        line-height 40px
+        height 58px
+        line-height 58px
         border-bottom 1px solid #e5e8ed
       }
       .grid-item{
@@ -90,6 +166,11 @@
         margin 10px 12px
         cursor move
         text-align center
+        &:hover{
+          .icon-box{
+            border: solid 1px #a5cffe;
+          }
+        }
       }
       .grid{
         padding-top 10px
@@ -107,7 +188,7 @@
       }
     }
     .mobile-box{
-      flex 1
+      flex 0 0 360px
       min-width 360px
       margin 0 20px 0 0
       height calc(100vh - 151px - 60px)
@@ -125,6 +206,11 @@
         text-align center
         font-size 16px
         cursor pointer
+        &:hover{
+          .el-icon-edit{
+            color red
+          }
+        }
       }
       .name{
         display inline-block
@@ -136,20 +222,24 @@
       }
       .el-icon-edit{
         margin-left 3px
-        color #f1f98c
         vertical-align middle
       }
     }
     .mobile-content{
-      margin 0 auto
-      width 360px
-      height 100%
-      background #fff
     }
     .config-box{
-      flex 0 0 400px
+      flex 1
+      min-width 400px
+      padding 0 20px
       height calc(100vh - 151px - 60px)
       background #fff
+      .title{
+        font-size 16px
+        height 58px
+        line-height 58px
+        border-bottom 1px solid #e5e8ed
+        margin-bottom 20px
+      }
     }
   }
   .cms-edit-footer{
