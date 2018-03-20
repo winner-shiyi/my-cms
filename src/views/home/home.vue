@@ -89,6 +89,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
+        // todo发送删除请求，请求成功后刷新列表页
         this.$message({
           type: 'success',
           message: '删除成功!',
