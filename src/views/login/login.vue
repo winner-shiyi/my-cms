@@ -4,95 +4,71 @@
     <div class="login-main">
       <div class="left">
         <div class="name"><i class="icon-cms-hello"></i> CMS</div>
-        <h2>欢迎您</h2>
       </div>
       <div class="right">
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-          <el-form-item prop="pass">
-            <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="密码"></el-input>
+        <el-form
+          :model="loginForm"
+          status-icon
+          ref="loginForm"
+        >
+          <div class="title">Login</div>
+          <el-form-item
+            prop="username"
+            :rules="[
+              { required: true, message: '请输入用户名', trigger: 'blur' },
+              { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur, change' }
+            ]"
+          >
+              <el-input v-model="loginForm.username" placeholder="账号"></el-input>
           </el-form-item>
-          <el-form-item prop="checkPass">
-            <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
+          <el-form-item
+            prop="password"
+            :rules="[
+              { required: true, message: '请输入密码', trigger: 'blur' },
+              { pattern: /^[0-9a-zA-Z]{8,20}$/, message: '支持8-10位数字及英文', trigger: 'blur, change' }
+            ]"
+          >
+            <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
-          <el-form-item prop="age">
-            <el-input v-model.number="ruleForm2.age" placeholder="账号"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
-            <!-- <el-button @click="resetForm('ruleForm2')">重置</el-button> -->
+          <el-form-item class="btn-item">
+            <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
+    <div class="blank"></div>
+    <footer class="footer">Copyright © 2018  产业互联技术中心</footer>
+  </div>
     <!-- <div class="demo">
       登录页面
       <el-button type="success" @click="clickFn">成功按钮</el-button>
     </div> -->
-    <div class="blank"></div>
-    <footer class="footer">Copyright © 2018 产业互联技术中心</footer>
-  </div>
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
   data() {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('年龄不能为空'))
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'))
-        } else {
-          if (value < 18) {
-            callback(new Error('必须年满18岁'))
-          } else {
-            callback()
-          }
-        }
-      }, 1000)
-    }
-    var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        if (this.ruleForm2.checkPass !== '') {
-          this.$refs.ruleForm2.validateField('checkPass')
-        }
-        callback()
-      }
-    }
-    var validatePass2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请再次输入密码'))
-      } else if (value !== this.ruleForm2.pass) {
-        callback(new Error('两次输入密码不一致!'))
-      } else {
-        callback()
-      }
-    }
     return {
       msg: '登录页面',
-      ruleForm2: {
-        pass: '',
+      loginForm: {
+        password: '',
         checkPass: '',
-        age: '',
-      },
-      rules2: {
-        pass: [
-          { validator: validatePass, trigger: 'blur' },
-        ],
-        checkPass: [
-          { validator: validatePass2, trigger: 'blur' },
-        ],
-        age: [
-          { validator: checkAge, trigger: 'blur' },
-        ],
+        username: '',
       },
     }
   },
   methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
     clickFn() {
       this.$ajax.blogList({aaa: 'ffff'}).then((data) => {
         console.log(data)
@@ -135,25 +111,27 @@ export default {
           padding 0 0 40px
           font-size 36px
         }
-        h2{
-          text-align center
-          color: #c9d3e9;
-          font-family: 'PingFangSC';
-          font-weight: 200;
-          font-size: 18px;
-          letter-spacing: 2.63px;
-        }
       }
       .right{
         flex 1
-        padding 20px
+        padding 60px
         .el-button{
           width 180px
         }
+        .title{
+          font-size 25px
+          color #409eff;
+          font-family 'PingFangSC'
+          height 60px;
+        }
+      }
+      .btn-item{
+        text-align center
+        padding-top 40px
       }
     }
     .footer{
-
+      height 30px
     }
   }
 </style>

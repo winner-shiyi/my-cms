@@ -1,7 +1,11 @@
 <template>
   <div class="cms-create">
     <div class="title">添加页面</div>
-    <el-form :model="cmsPageValidateForm" ref="cmsPageValidateForm" label-width="100px" class="demo-ruleForm">
+    <el-form
+      :model="cmsPageValidateForm"
+      ref="cmsPageValidateForm"
+      label-width="100px"
+    >
       <el-form-item
         label="项目名称"
         prop="projectName"
@@ -92,8 +96,8 @@ export default {
 
 <style lang="stylus">
   .cms-create{
-    background-color #fff;
-    height  500px
+    background-color #fff
+    padding-bottom 50px
     .title{
       height 68px
       line-height 68px

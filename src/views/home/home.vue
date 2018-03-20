@@ -38,7 +38,7 @@
           <router-link to="/home/edit">
             <el-button type="text" size="small">编辑</el-button>
           </router-link>
-          <el-button type="text" size="small">删除</el-button>
+          <el-button type="text" size="small" @click="deletePage" >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -80,6 +80,25 @@ export default {
   computed: {
     aaa() {
       return this.aaaa
+    },
+  },
+  methods: {
+    deletePage() {
+      this.$confirm('此操作将永久删除该模板, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!',
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除',
+        })
+      })
     },
   },
 }
