@@ -6,44 +6,20 @@
           <section class="comps-section">
             <h2 class="title">基础组件库</h2>
             <div class="grid">
-              <ul>
-                <li class="grid-item">
-                  <div class="icon-box">
-                    <i class="icon-cms-search"></i>
-                  </div>
-                  <span class="name">搜索栏</span>
-                </li>
-                <li class="grid-item">
-                  <div class="icon-box">
-                    <i class="icon-cms-banner"></i>
-                  </div>
-                  <span class="name">轮播图</span>
-                </li>
-                <li class="grid-item">
-                  <div class="icon-box">
-                    <i class="icon-cms-ad"></i>
-                  </div>
-                  <span class="name">图片列表</span>
-                </li>
-                <li class="grid-item">
-                  <div class="icon-box">
-                    <i class="icon-cms-type"></i>
-                  </div>
-                  <span class="name">类型</span>
-                </li>
-                <li class="grid-item">
-                  <div class="icon-box">
-                    <i class="icon-cms-text"></i>
-                  </div>
-                  <span class="name">分割栏</span>
-                </li>
-                <li class="grid-item">
-                  <div class="icon-box">
-                    <i class="icon-cms-shop"></i>
-                  </div>
-                  <span class="name">商品列表</span>
-                </li>
-              </ul>
+              <draggable
+                element="ul"
+                :list="list"
+                :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false"
+              >
+                <transition-group type="transition" :name="'flip-list'">
+                  <li class="grid-item" v-for="element in list" :key="element.componentId">
+                    <div class="icon-box">
+                      <i :class="`icon-cms-${element.icon}`"></i>
+                    </div>
+                    <span class="name">{{element.name}}</span>
+                  </li>
+                </transition-group>
+            </draggable>
             </div>
           </section>
         </div>
@@ -52,6 +28,13 @@
             <div class="header">
               <span class="name">魏娜的模板<i class="el-icon-edit"></i></span>
             </div>
+            <draggable
+              element="span"
+              v-model="list" :options="dragOptions" :move="onMove">
+                <transition-group name="no" class="list-group" tag="ul">
+
+                </transition-group>
+            </draggable>
           </div>
         </div>
         <div class="config-box">
@@ -113,9 +96,50 @@
   </div>
 </template>
 <script>
+import draggable from 'vuedraggable'
+const message = [
+  {
+    name: '搜索栏',
+    icon: 'search',
+    componentId: 1,
+  },
+  {
+    name: '轮播图',
+    icon: 'banner',
+    componentId: 2,
+  },
+  {
+    name: '图片列表',
+    icon: 'grid',
+    componentId: 3,
+  },
+  {
+    name: '类型导航',
+    icon: 'menu',
+    componentId: 4,
+  },
+  {
+    name: '分割栏',
+    icon: 'text',
+    componentId: 5,
+  },
+  {
+    name: '商品列表',
+    icon: 'shop',
+    componentId: 6,
+  },
+]
+
 export default {
+  components: {
+    draggable,
+  },
   data() {
     return {
+      list: message,
+      editable: true,
+      isDragging: false,
+      delayedDragging: false,
       isEditPageName: true,
       cmsPageValidateForm: {
         pageName: '',
@@ -132,6 +156,34 @@ export default {
         label: 'JavaScript',
       }],
     }
+  },
+  methods: {
+    onMove({relatedContext, draggedContext}) {
+      const relatedElement = relatedContext.element
+      const draggedElement = draggedContext.element
+      return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+    },
+  },
+  computed: {
+    dragOptions() {
+      return {
+        animation: 0,
+        group: 'description',
+        disabled: !this.editable,
+        ghostClass: 'ghost',
+      }
+    },
+  },
+  watch: {
+    isDragging(newValue) {
+      if (newValue) {
+        this.delayedDragging = true
+        return
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false
+      })
+    },
   },
 }
 </script>
