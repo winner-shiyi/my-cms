@@ -30,7 +30,7 @@ const routes = [
       {
         path: 'edit',
         name: 'home.edit',
-        component: resolve => require(['../../views/home/edit.vue'], resolve),
+        component: resolve => require(['../../views/home/edit/edit.vue'], resolve),
       },
     ],
   },
