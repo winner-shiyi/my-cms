@@ -13,10 +13,31 @@
           />
         </div>
         <div class="mobile-box">
-          <cms-mobile-comps
-            :data="blocks.data"
-            :options="mobileOption"
-          ></cms-mobile-comps>
+          <div class="mobile-content">
+            <div class="header">
+              <span class="name">魏娜的模板<i class="el-icon-edit"></i></span>
+            </div>
+            <draggable
+              v-model="blocks"
+              :options="mobileOption"
+            >
+              <transition-group class="list-group" tag="div">
+                <wrapper
+                  v-for="block in blocks"
+                  :key="block.id"
+                  :item="block"
+                  :is-active="block.id === activeItem.id"
+                  @active="onActive"
+                  @remove="onRemove"
+                >
+                  <div v-if="block.status === 'INIT' || block.status === 'NO_DATA'">
+                    <img src="" alt="">
+                  </div>
+                  <cms-mobile-comps v-else :type="block.type" :item="block"></cms-mobile-comps>
+                </wrapper>
+              </transition-group>
+            </draggable>
+          </div>
         </div>
         <div class="config-box">
           <cms-mobile-config></cms-mobile-config>
@@ -31,9 +52,11 @@
 </template>
 <script>
 import draggable from 'vuedraggable'
-import cmsLeftList from './components/left/index.vue'
-import cmsMobileComps from './components/center/center.vue'
+import cmsLeftList from './components/left/left.vue'
+import cmsMobileComps from './components/center/index.js'
+import wrapper from './components/center/wrapper.vue'
 import cmsMobileConfig from './components/right/right.vue'
+import mockBlocks from './mock.js'
 
 const message = [
   {
@@ -74,7 +97,7 @@ export default {
     cmsLeftList,
     cmsMobileComps,
     cmsMobileConfig,
-
+    wrapper,
   },
   data() {
     return {
@@ -98,22 +121,7 @@ export default {
         ghostClass: 'drag-ghost', // 拖拽进入手机模板后显示的css
       },
       // 中间手机模板的数据
-      blocks: [
-        {
-          data: {
-            list: [
-              {
-                id: 1,
-                name: '中国人',
-              },
-              {
-                id: 2,
-                name: '美国人',
-              },
-            ],
-          },
-        },
-      ],
+      blocks: [],
       // 中间手机模板的拖拽配置
       mobileOption: {
         group: {
@@ -121,11 +129,38 @@ export default {
           pull: false,
         },
       },
+      // 是否是添加状态，当组件从组件列表中拖拽进入手机模板中后，会设置为add状态。然后设置选中的组件为当前添加的组件
+      isAdd: false,
+      // 手机模板中选中的组件
+      activeItem: {
+        id: '',
+        type: '',
+        data: {},
+      },
     }
   },
+  mounted() {
+    this.blocks = mockBlocks
+    console.log('this.blocks---', mockBlocks)
+  },
   methods: {
-    onEnd() {
-
+    onEnd(item) {
+      if (this.isAdd) {
+        this.activeItem = item
+      }
+      this.isAdd = false
+    },
+    onRemove(item) {
+      this.$confirm('确认删除？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        // todo
+      })
+    },
+    onActive(item) {
+      this.activeItem = item
     },
   },
   computed: {
@@ -175,13 +210,14 @@ export default {
       .icon-box{
         width 60px
         height 60px
-        line-height: 60px;
-        border-radius: 2px;
-        background-color: #fff;
-        border: solid 1px #dadee2;
-        color: #dadee2;
-        font-size: 28px;
-        text-align: center;
+        line-height 60px
+        border-radius 2px
+        background-color #fff
+        border solid 1px #dadee2
+        color #dadee2
+        font-size 28px
+        text-align center
+        margin-bottom 5px
       }
     }
     .mobile-box{
