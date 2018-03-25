@@ -12,7 +12,7 @@
           @end="onEnd"
         >
           <transition-group type="transition">
-            <li class="grid-item" v-for="element in data.list" :key="element.componentId">
+            <li class="grid-item" v-for="element in data.list" :key="element.id">
               <div class="icon-box">
                 <i :class="`icon-cms-${element.icon}`"></i>
               </div>
@@ -26,6 +26,7 @@
 </template>
 <script>
 import draggable from 'vuedraggable'
+import uuid from 'uuid/v4'
 
 export default {
   components: {
@@ -53,19 +54,17 @@ export default {
   },
   methods: {
     onStart() {
-      // this.$emit('start', this.cloneItem)
+      this.$emit('start', this.cloneItem)
       this.options.disabled = true
     },
     onEnd() {
-      // this.$emit('end', this.cloneItem)
+      this.$emit('end', this.cloneItem)
       this.options.disabled = false
     },
     onClone(el) {
-      // const item = clone({
-      //   ...el,
-      //   id: uuid(),
-      // })
-      this.cloneItem = {name: 'weina'}
+      const item = { ...JSON.parse(JSON.stringify(el)), id: uuid() }
+      this.cloneItem = item
+      return item
     },
   },
 }

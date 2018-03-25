@@ -20,7 +20,7 @@ const blocks = [
     "listIds": null,
     "pictureUrl": "",
     "sequence": null,
-    "status": "STORED",
+    "status": "INIT",
     "styles": null,
     "type": "CAROUSEL"
   },

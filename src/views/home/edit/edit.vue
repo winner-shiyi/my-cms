@@ -20,18 +20,26 @@
             <draggable
               v-model="blocks"
               :options="mobileOption"
+              @add="onAdd"
+              class="blocks-box"
             >
-              <transition-group class="list-group" tag="div">
+              <transition-group
+                :class="[
+                  'list-group',
+                   blocks && blocks.length ? '' : 'drag-block--show'
+                ]"
+                tag="div"
+              >
                 <wrapper
-                  v-for="block in blocks"
-                  :key="block.id"
+                  v-for="(block, key) in blocks"
+                  :key="key"
                   :item="block"
                   :is-active="block.id === activeItem.id"
                   @active="onActive"
                   @remove="onRemove"
                 >
-                  <div v-if="block.status === 'INIT' || block.status === 'NO_DATA'">
-                    <img src="" alt="">
+                  <div class="drag-ghost__block" v-if="block.status === 'INIT' || block.status === 'NO_DATA'">
+                    <img :src="ghostImgs[block.type]">
                   </div>
                   <cms-mobile-comps v-else :type="block.type" :item="block"></cms-mobile-comps>
                 </wrapper>
@@ -56,40 +64,8 @@ import cmsLeftList from './components/left/left.vue'
 import cmsMobileComps from './components/center/index.js'
 import wrapper from './components/center/wrapper.vue'
 import cmsMobileConfig from './components/right/right.vue'
-import mockBlocks from './mock.js'
-
-const message = [
-  {
-    name: '搜索栏',
-    icon: 'search',
-    componentId: 1,
-  },
-  {
-    name: '轮播图',
-    icon: 'banner',
-    componentId: 2,
-  },
-  {
-    name: '图片列表',
-    icon: 'grid',
-    componentId: 3,
-  },
-  {
-    name: '类型导航',
-    icon: 'menu',
-    componentId: 4,
-  },
-  {
-    name: '分割栏',
-    icon: 'text',
-    componentId: 5,
-  },
-  {
-    name: '商品列表',
-    icon: 'shop',
-    componentId: 6,
-  },
-]
+// import mockBlocks from './mock.js'
+import { baseComps, ghostImgs } from './components/config'
 
 export default {
   components: {
@@ -101,16 +77,18 @@ export default {
   },
   data() {
     return {
-      list: message,
       // 左侧组件列表
       modules: [
         {
           title: '基础组件库',
           data: {
-            list: message,
+            list: baseComps,
+            ghosts: ghostImgs,
           },
         },
       ],
+      // 空白图片，组件状态为INIT或NO_DATA时会显示该图片
+      ghostImgs,
       // 左侧组件列表的拖拽配置
       compsOption: {
         disabled: false,
@@ -140,10 +118,21 @@ export default {
     }
   },
   mounted() {
-    this.blocks = mockBlocks
-    console.log('this.blocks---', mockBlocks)
+    // this.blocks = mockBlocks
+    // console.log('this.blocks---', mockBlocks)
   },
   methods: {
+    /**
+     * 当组件增加到手机模板上时
+     *（注意：此时该组件还处于拖拽状态）
+     */
+    onAdd() {
+      this.isAdd = true
+    },
+    /**
+     * 组件结束拖拽
+     * @param {Object} item 新增的模块
+     */
     onEnd(item) {
       if (this.isAdd) {
         this.activeItem = item
@@ -156,7 +145,8 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        // todo
+        this.activeItem = {}
+        this.blocks = this.blocks.filter((block) => block.id !== item.id)
       })
     },
     onActive(item) {
@@ -226,7 +216,6 @@ export default {
       margin 0 20px 0 0
       height calc(100vh - 151px - 60px)
       overflow hidden
-      overflow-y scroll
       background #ecedf1
       &::-webkit-scrollbar{
         display none
@@ -259,6 +248,39 @@ export default {
       }
     }
     .mobile-content{
+      height 100%
+      .blocks-box{
+        position relative
+        height 100%
+        overflow-y scroll
+      }
+      .list-group {
+        font-size: 0;
+        position: absolute;
+        width: 340px;
+        padding: 0;
+        margin: 0;
+        margin-left: -1px;
+        border: 1px solid #e4e4e4;
+        border-top: none;
+        background-color: #f1f1f1;
+        &.drag-block--show {
+          height: 100%;
+          // height: calc(100vh - 251px);
+        }
+        .drag-ghost {
+          position: relative;
+          margin: 0;
+          padding: 0;
+          &__block {
+            width: 338px;
+            display: block;
+            img {
+              max-width: 100%;
+            }
+          }
+        }
+      }
     }
     .config-box{
       flex 1
