@@ -59,8 +59,8 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      width: 348px;
-      height: calc(100% + 8px);
+      width: 100%;
+      height: calc(100% + 0px);
       border-radius: 5px;
       border: 4px solid rgba(80,191,255,0.25);
       box-shadow: 0 4px 6px 0 rgba(230, 234, 238, 0.7);

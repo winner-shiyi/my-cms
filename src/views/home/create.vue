@@ -101,7 +101,7 @@ export default {
     .title{
       height 68px
       line-height 68px
-      margin 0 10px
+      margin 0 20px
       border-bottom 1px solid #e5e8ed
       font-size 16px
     }

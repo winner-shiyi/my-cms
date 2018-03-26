@@ -53,8 +53,8 @@
       </div>
     </div>
     <div class="cms-edit-footer">
-      <el-button type="primary" >保存</el-button>
-      <el-button>取消</el-button>
+      <el-button type="primary" @click="onSubmit" :disabled="isLock">保存</el-button>
+      <el-button @click="onCancel">取消</el-button>
     </div>
   </div>
 </template>
@@ -87,8 +87,6 @@ export default {
           },
         },
       ],
-      // 空白图片，组件状态为INIT或NO_DATA时会显示该图片
-      ghostImgs,
       // 左侧组件列表的拖拽配置
       compsOption: {
         disabled: false,
@@ -115,11 +113,21 @@ export default {
         type: '',
         data: {},
       },
+      // 空白图片，组件状态为INIT或NO_DATA时会显示该图片
+      ghostImgs,
+      // 是否disable保存按钮
+      isLock: false,
     }
   },
   mounted() {
+    // todo
     // this.blocks = mockBlocks
     // console.log('this.blocks---', mockBlocks)
+  },
+  computed: {
+    isError() {
+      return this.blocks.some((block) => block.status === 'ERROR')
+    },
   },
   methods: {
     /**
@@ -134,6 +142,7 @@ export default {
      * @param {Object} item 新增的模块
      */
     onEnd(item) {
+      // 组件拖拽到手机模板上之后，自动设置为选中模块
       if (this.isAdd) {
         this.activeItem = item
       }
@@ -152,8 +161,32 @@ export default {
     onActive(item) {
       this.activeItem = item
     },
-  },
-  computed: {
+    /**
+     * 提交表单
+     */
+    onSubmit() {
+      this.activeItem = {}
+      this.$nextTick(() => {
+        if (this.isError) {
+          this.$message.error('存在未完成的组件，请先完成组件内容设置')
+        } else {
+          this.isLock = true
+          // todo
+        }
+      })
+    },
+    /**
+     * 取消
+     */
+    onCancel() {
+      this.$confirm('退出后输入内容将不保存，是否继续退出？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        this.$router.push({ name: 'pages.home' })
+      }).catch(() => {})
+    },
   },
 }
 </script>
@@ -164,6 +197,7 @@ export default {
     overflow-y hidden
     .edit-box{
       display flex
+      padding-bottom 10px
     }
     .comps-box{
       flex 0 0 220px
@@ -174,45 +208,10 @@ export default {
       &::-webkit-scrollbar{
         display none
       }
-      .comps-section{
-        padding 0 20px 20px
-      }
-      .title{
-        font-size 16px
-        height 58px
-        line-height 58px
-        border-bottom 1px solid #e5e8ed
-      }
-      .grid-item{
-        display inline-block
-        margin 10px 12px
-        cursor move
-        text-align center
-        &:hover{
-          .icon-box{
-            border: solid 1px #a5cffe;
-          }
-        }
-      }
-      .grid{
-        padding-top 10px
-      }
-      .icon-box{
-        width 60px
-        height 60px
-        line-height 60px
-        border-radius 2px
-        background-color #fff
-        border solid 1px #dadee2
-        color #dadee2
-        font-size 28px
-        text-align center
-        margin-bottom 5px
-      }
     }
     .mobile-box{
-      flex 0 0 360px
-      min-width 360px
+      flex 0 0 340px
+      min-width 340px
       margin 0 20px 0 0
       height calc(100vh - 151px - 60px)
       overflow hidden
@@ -250,23 +249,23 @@ export default {
     .mobile-content{
       height 100%
       .blocks-box{
-        position relative
         height 100%
         overflow-y scroll
+        &::-webkit-scrollbar{
+          display none
+        }
       }
       .list-group {
         font-size: 0;
         position: absolute;
         width: 340px;
-        padding: 0;
-        margin: 0;
-        margin-left: -1px;
+        padding-top 10px;
         border: 1px solid #e4e4e4;
         border-top: none;
         background-color: #f1f1f1;
         &.drag-block--show {
-          height: 100%;
-          // height: calc(100vh - 251px);
+          // height: 100%;
+          height: calc(100vh - 251px);
         }
         .drag-ghost {
           position: relative;
@@ -288,13 +287,6 @@ export default {
       padding 0 20px
       height calc(100vh - 151px - 60px)
       background #fff
-      .title{
-        font-size 16px
-        height 58px
-        line-height 58px
-        border-bottom 1px solid #e5e8ed
-        margin-bottom 20px
-      }
     }
   }
   .cms-edit-footer{

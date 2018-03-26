@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="center-config">
     <h2 class="title">页面配置</h2>
       <div v-if="isEditPageName">
         <el-form :model="cmsPageValidateForm" ref="cmsPageValidateForm" label-width="100px" class="demo-ruleForm">
@@ -73,3 +73,14 @@ export default {
   },
 }
 </script>
+<style lang="stylus" scoped>
+.center-config{
+  .title{
+    font-size 16px
+    height 58px
+    line-height 58px
+    border-bottom 1px solid #e5e8ed
+    margin-bottom 20px
+  }
+}
+</style>
