@@ -1,9 +1,19 @@
-// Banner轮播图预览组件
-import cmsCarousel from './carousel.vue'
+// Banner轮播图编辑组件
+import CmsCarousel from './carousel.vue'
+// // search编辑组件
+// import CmsSearch from './title.vue'
+// // 类型编辑组件
+// import CmsCategory from './category.vue'
+// // 图片编辑组件
+// import CmsPicture from './picture.vue'
+// // 文本编辑组件
+// import CmsText from './text.vue'
+// // 商户列表编辑组件
+// import CmsStoreList from './store-list.vue'
 
 export default {
   components: {
-    cmsCarousel,
+    CmsCarousel,
   },
   props: {
     type: {

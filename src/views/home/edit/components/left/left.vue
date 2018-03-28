@@ -12,11 +12,14 @@
           @end="onEnd"
         >
           <transition-group type="transition">
-            <li class="grid-item" v-for="element in data.list" :key="element.id">
+            <li class="grid-item" v-for="comp in data.list" :key="comp.id">
               <div class="icon-box">
-                <i :class="`icon-cms-${element.icon}`"></i>
+                <i :class="`icon-cms-${comp.icon}`"></i>
               </div>
-              <span class="name">{{element.name}}</span>
+              <span class="name">{{comp.name}}</span>
+              <div class="comps-ghost-mobile">
+                <img :src="data.ghosts[comp.type]"/>
+              </div>
             </li>
           </transition-group>
       </draggable>
@@ -110,6 +113,36 @@ export default {
       font-size 28px
       text-align center
       margin-bottom 5px
+    }
+    .comps-ghost-mobile{
+      display none
+    }
+    .drag-ghost{
+      .icon-box{
+        display block
+      }
+      .name{
+        display inline
+      }
+      .comps-ghost-mobile{
+        display none
+      }
+    }
+  }
+  // 组件在手机模板上的样式
+  .drag-ghost {
+    .icon-box{
+      display none
+    }
+    .name{
+      display none
+    }
+    .comps-ghost-mobile{
+      display block
+      width 338px
+      img{
+        max-width 100%
+      }
     }
   }
 </style>

@@ -14,7 +14,7 @@
         </div>
         <div class="mobile-box">
           <div class="mobile-content">
-            <div class="header">
+            <div class="header" @click="onOpen">
               <span class="name">魏娜的模板<i class="el-icon-edit"></i></span>
             </div>
             <draggable
@@ -48,7 +48,13 @@
           </div>
         </div>
         <div class="config-box">
-          <cms-mobile-config></cms-mobile-config>
+          <h2 class="title">{{ activeItem.id ? '内容配置': '页面配置'}}</h2>
+          <cms-mobile-config
+            v-if="activeItem.id"
+            :key="activeItem.id" :type="activeItem.type" :item="activeItem"
+          >
+          </cms-mobile-config>
+          <page-name-config v-else></page-name-config>
         </div>
       </div>
     </div>
@@ -63,7 +69,8 @@ import draggable from 'vuedraggable'
 import cmsLeftList from './components/left/left.vue'
 import cmsMobileComps from './components/center/index.js'
 import wrapper from './components/center/wrapper.vue'
-import cmsMobileConfig from './components/right/right.vue'
+import cmsMobileConfig from './components/right/index.js'
+import pageNameConfig from './components/right/page-config.vue'
 // import mockBlocks from './mock.js'
 import { baseComps, ghostImgs } from './components/config'
 
@@ -74,6 +81,7 @@ export default {
     cmsMobileComps,
     cmsMobileConfig,
     wrapper,
+    pageNameConfig,
   },
   data() {
     return {
@@ -161,6 +169,9 @@ export default {
     onActive(item) {
       this.activeItem = item
     },
+    onOpen() {
+      this.activeItem = {}
+    },
     /**
      * 提交表单
      */
@@ -247,9 +258,7 @@ export default {
       }
     }
     .mobile-content{
-      height 100%
       .blocks-box{
-        height 100%
         overflow-y scroll
         &::-webkit-scrollbar{
           display none
@@ -264,7 +273,6 @@ export default {
         border-top: none;
         background-color: #f1f1f1;
         &.drag-block--show {
-          // height: 100%;
           height: calc(100vh - 251px);
         }
         .drag-ghost {
@@ -287,6 +295,13 @@ export default {
       padding 0 20px
       height calc(100vh - 151px - 60px)
       background #fff
+      .title{
+        font-size 16px
+        height 58px
+        line-height 58px
+        border-bottom 1px solid #e5e8ed
+        margin-bottom 20px
+      }
     }
   }
   .cms-edit-footer{
