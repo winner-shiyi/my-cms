@@ -280,8 +280,8 @@ export default {
           margin: 0;
           padding: 0;
           &__block {
-            width: 338px;
             display: block;
+            width: 338px;
             img {
               max-width: 100%;
             }
