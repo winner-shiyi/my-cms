@@ -19,6 +19,7 @@
         <el-form-item label="自动播放" prop="autoPlay" required>
           <el-switch v-model="ruleForm.autoPlay"></el-switch>
         </el-form-item>
+        <span v-show="configItems.length > 1" class="close" @click.prevent.stop="onRemove"><i class="el-icon-delete"></i></span>
       </el-row>
       <el-form-item class="wrap-btn">
         <el-button class="add-btn" @click="addItem">添 加(1/10)</el-button>
@@ -42,12 +43,22 @@ export default {
       configItems: [
         1,
       ],
+      removable: true,
     }
   },
   methods: {
     addItem() {
       const item = {}
       this.configItems.push(item)
+    },
+    onRemove() {
+      this.$confirm('确认删除？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        // todo
+      })
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
@@ -67,6 +78,38 @@ export default {
   },
 }
 </script>
+<style lang="stylus" scoped>
+  .form-li{
+    border: 1px solid #e7e7e7;
+    padding: 20px 30px 0;
+    margin-bottom 20px
+    &:last-child{
+      margin-bottom none
+    }
+    .close{
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #000;
+      background-color: rgba(0, 0, 0, 0.15);
+      cursor pointer
+    }
+  }
+  .wrap-btn{
+    padding-top: 20px;
+    text-align: center;
+  }
+  .add-btn{
+    border: 1px solid #20a0ff;
+    color: #20a0ff;
+    width : 70%;
+  }
+</style>
+
 <style lang="stylus">
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
@@ -90,22 +133,5 @@ export default {
     width: 106px;
     height: 106px;
     display: block;
-  }
-  .form-li{
-    border: 1px solid #e7e7e7;
-    padding: 20px 30px 0;
-    margin-bottom 20px
-    &:last-child{
-      margin-bottom none
-    }
-  }
-  .wrap-btn{
-    padding-top: 20px;
-    text-align: center;
-  }
-  .add-btn{
-    border: 1px solid #20a0ff;
-    color: #20a0ff;
-    width : 70%;
   }
 </style>
