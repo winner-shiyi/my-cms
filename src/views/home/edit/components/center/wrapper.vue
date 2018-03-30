@@ -9,7 +9,7 @@
     @click="onActive"
   >
     <slot></slot>
-    <span v-show="removable && (isActive || isHover)" class="comps-block__close" @click.prevent.stop="onRemove">X</span>
+    <span v-show="removable && (isActive || isHover)" class="comps-block__close" @click.prevent.stop="onRemove"><i class="el-icon-delete"></i></span>
   </div>
 </template>
 <script>
@@ -49,68 +49,24 @@ export default {
 <style lang="stylus" scoped>
   .comps-block {
     position: relative;
-    display: inline-block;
     width: 100%;
-    font-size: 0;
+    box-sizing border-box
     cursor: pointer;
-    &::before {
-      content: '';
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: calc(100% + 0px);
-      border-radius: 5px;
-      border: 4px solid rgba(80,191,255,0.25);
-      box-shadow: 0 4px 6px 0 rgba(230, 234, 238, 0.7);
-      margin: -4px 0 0 -5px;
-      z-index: 1;
-    }
-    &::after {
-      content: '';
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 1px solid rgba(0,156,229,.8);
-    }
-    &__hover {
-      // &::before {
-      //   display: block;
-      //   width: 360px;
-      //   border: 4px solid rgba(80,191,255,0.25);
-      //   box-shadow: 0 4px 6px 0 rgba(230, 234, 238, 0.7);
-      //   margin: -4px 0 0 -5px;
-      // }
-      &::after {
-        display: block;
-      }
-    }
+    border 2px solid #fff
     &__active {
-      &::before {
-        display: block;
-      }
-      &::after {
-        display: block;
-      }
+      border 2px dotted #409EFF
+      box-shadow 0 1px 5px #b3bdd8
     }
     &__close {
       position: absolute;
-      right: -9px;
-      top: -9px;
+      right: 0;
+      top: 0;
       width: 20px;
       height: 20px;
-      line-height: 18px;
-      border: 1px solid;
-      border-radius: 50px;
       text-align: center;
-      font-size: 12px;
-      color: #ff4949;
-      background-color: #fff;
-      z-index: 1;
+      font-size: 13px;
+      color: #000;
+      background-color: rgba(0, 0, 0, 0.15);
     }
     &__error {
       position: absolute;

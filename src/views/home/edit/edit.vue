@@ -225,8 +225,8 @@ export default {
       min-width 340px
       margin 0 20px 0 0
       height calc(100vh - 151px - 60px)
-      overflow hidden
       background #ecedf1
+      overflow hidden
       &::-webkit-scrollbar{
         display none
       }
@@ -259,31 +259,28 @@ export default {
     }
     .mobile-content{
       .blocks-box{
-        overflow-y scroll
+        height: calc(100vh - 151px - 60px - 58px);
+        overflow-y: scroll;
         &::-webkit-scrollbar{
           display none
         }
       }
       .list-group {
-        font-size: 0;
-        position: absolute;
-        width: 340px;
-        padding-top 10px;
-        border: 1px solid #e4e4e4;
-        border-top: none;
-        background-color: #f1f1f1;
+        width: 340px
+        padding-top 2px
+        border-top none
+        background-color #f1f1f1
         &.drag-block--show {
-          height: calc(100vh - 251px);
+          height: calc(100vh - 251px)
         }
         .drag-ghost {
           position: relative;
           margin: 0;
           padding: 0;
           &__block {
-            display: block;
-            width: 338px;
             img {
               max-width: 100%;
+              display: block;
             }
           }
         }
@@ -295,6 +292,10 @@ export default {
       padding 0 20px
       height calc(100vh - 151px - 60px)
       background #fff
+      overflow-y scroll
+      &::-webkit-scrollbar{
+        display none
+      }
       .title{
         font-size 16px
         height 58px

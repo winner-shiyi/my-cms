@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-      <el-row class="form-li">
+      <el-row class="form-li" v-for="(item, index) in configItems" :key="index">
         <el-form-item label="上传图片" prop="uploadImage" required>
         <el-upload
           class="avatar-uploader"
@@ -21,7 +21,7 @@
         </el-form-item>
       </el-row>
       <el-form-item class="wrap-btn">
-        <el-button class="add-btn" @click="addLi">添 加(1/10)</el-button>
+        <el-button class="add-btn" @click="addItem">添 加(1/10)</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -39,9 +39,16 @@ export default {
 
       },
       imageUrl: '',
+      configItems: [
+        1,
+      ],
     }
   },
   methods: {
+    addItem() {
+      const item = {}
+      this.configItems.push(item)
+    },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
     },
@@ -87,9 +94,14 @@ export default {
   .form-li{
     border: 1px solid #e7e7e7;
     padding: 20px 30px 0;
+    margin-bottom 20px
+    &:last-child{
+      margin-bottom none
+    }
   }
   .wrap-btn{
     padding-top: 20px;
+    text-align: center;
   }
   .add-btn{
     border: 1px solid #20a0ff;
