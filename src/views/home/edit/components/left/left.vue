@@ -70,7 +70,7 @@ export default {
      * @return {Object}     初始化后的数据（修改了id，保证同样的组件，但是有不同的id）
      */
     onClone(el) {
-      console.log('el====', el)
+      // console.log('el====', el)
       const item = { ...JSON.parse(JSON.stringify(el)), id: uuid() }
       this.cloneItem = item
       return item

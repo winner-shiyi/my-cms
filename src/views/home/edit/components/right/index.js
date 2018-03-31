@@ -1,7 +1,7 @@
 // search编辑组件
 import CmsSearch from './search.vue'
 // Banner轮播图编辑组件
-import CmsCarousel from './carousel.1.vue'
+import CmsCarousel from './carousel.vue'
 // 类型编辑组件
 import CmsCategory from './category.vue'
 // 图片编辑组件
