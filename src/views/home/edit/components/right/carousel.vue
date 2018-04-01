@@ -98,6 +98,21 @@ export default {
       return isJPG && isLt2M
     },
   },
+  mounted() {
+    const aa = [
+      {
+        uploadImage: '',
+        autoPlay: false,
+        link: '111',
+      },
+      {
+        uploadImage: '',
+        autoPlay: false,
+        link: '222',
+      },
+    ]
+    this.ruleForm.configItems = aa
+  },
 }
 </script>
 <style lang="stylus" scoped>

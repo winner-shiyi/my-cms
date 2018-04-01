@@ -117,6 +117,9 @@ export default {
       margin-bottom 20px
       padding 0 10px
     }
+    .search{
+      width 40%
+    }
     .el-select .el-input {
       width 110px
     }
