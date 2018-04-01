@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px">
       <el-row class="form-li" v-for="(item, index) in ruleForm.configItems" :key="index">
+        <p class="count-box" v-show="isArray">第<span class="count">{{index + 1}}</span>个</p>
         <el-form-item label="设置高度" :prop="'configItems.' + index + '.height'">
           <el-input-number v-model="num" @change="handleChange" :min="40" :max="100" size="medium"></el-input-number>
         </el-form-item>
@@ -15,7 +16,7 @@
         >
           <el-input type="textarea" v-model="item.link"></el-input>
         </el-form-item>
-        <span v-show="ruleForm.configItems.length > 1" class="close" @click="onRemove(index)"><i class="el-icon-delete"></i></span>
+        <span v-show="ruleForm.configItems.length > 1" class="close" @click.prevent="onRemove(index)"><i class="el-icon-delete"></i></span>
       </el-row>
        <el-form-item class="wrap-btn" v-show="isArray && ruleForm.configItems.length < 10">
         <el-button class="add-btn" @click="addItem">添 加({{ruleForm.configItems.length}}/10)</el-button>
@@ -33,7 +34,7 @@ export default {
       },
       rules: {},
       imageUrl: '',
-      isArray: false,
+      isArray: false, // 不是数组组件，没有增加按钮
     }
   },
   methods: {
@@ -63,8 +64,8 @@ export default {
 </script>
 <style lang="stylus" scoped>
   .form-li{
-    border: 1px solid #e7e7e7;
-    padding: 15px 30px 0;
+    border 1px solid #e7e7e7
+    padding 15px 30px 20px
     margin-bottom 20px
     &:last-child{
       margin-bottom none
