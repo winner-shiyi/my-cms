@@ -28,7 +28,7 @@
 export default {
   data() {
     return {
-      num: 40,
+      num: 40, // 高度默认值
       ruleForm: {
         configItems: [this.createdJson()],
       },

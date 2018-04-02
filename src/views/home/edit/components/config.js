@@ -59,8 +59,7 @@ comps.carousel = (opts = {}) => ({
   name: '轮播图',
   icon: 'banner',
   layout: 1,
-  list: [{ // 轮播组件详细内容，具体参考http://gitlab.ops.xkeshi.so/frontend/wemall-mobile/blob/master/client/views/coupon/index/components/README.md
-    pictureUrl: '',
+  list: [{
     link: {
       type: 0,
       subtype: 0,

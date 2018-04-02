@@ -11,16 +11,16 @@ axios.interceptors.request.use((config) => {
 // 响应数据配置
 axios.interceptors.response.use((response) => {
   const data = response.data
-  if (data.status) {
+  if (data.resultCode === '0') {
     return data
   }
-  const err = new Error(data.errorMsg)
-  err.data = data
-  err.response = response
+  const err = new Error(data.resultDesc)
+  err.code = data.resultCode
+  err.msg = data.resultDesc
   throw err
 }, (err) => {
   return {
-    msg: err.response.statusText,
-    code: err.response.status,
+    msg: err,
+    code: err.response.resultCode,
   }
 })

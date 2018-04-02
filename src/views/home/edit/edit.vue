@@ -134,24 +134,11 @@ export default {
   mounted() {
     this.$ajax.getMobileData({pageId: this.tplData.id})
       .then((result) => {
+        console.log('result---', result)
         // this.blocks = result.moduleList
       })
-      .catch((result) => {
-        console.log('result---', result)
-        // this.blocks = result.resultData.moduleList
-        // const aaData = {
-        //   id: ,
-        //   pageName:,
-        //   projectlist:[], 第一项是默认选中的值，
-        //   moduleList:[
-        //     id:,
-        //     type:"CAROUSEL",
-        //     status:,
-        //     list:[
-        //       pictureUrl:,
-        //     ]
-        //   ]
-        // }
+      .catch((err) => {
+        console.log('err---', err.msg)
         // this.$message.error(err.msg)
       })
   },
