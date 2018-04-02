@@ -7,7 +7,7 @@ module.exports = {
   // 模拟数据环境
   mock: {
     target: 'http://172.16.2.71:8068',
-    pathRewrite: '/mockjsdata/59',
+    pathRewrite: '/mockjsdata/86',
   },
   // 线上环境
   production: {

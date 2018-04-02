@@ -80,7 +80,17 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          const param = {
+            pageName: '页面名称',
+            projectName: '项目名称',
+          }
+          this.$ajax.createPage(param).then((result) => {
+            // console.log('创建页面----', result)
+            // const id = result.resultData.id
+            // this.$router.push({path: `/home/edit/${id}`})
+          }).catch(() => {
+            // this.$message.error(err.msg)
+          })
         } else {
           console.log('error submit!!')
           return false

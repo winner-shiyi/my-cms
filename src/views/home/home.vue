@@ -35,7 +35,7 @@
         label="操作"
         width="180">
         <template slot-scope="scope">
-          <router-link to="/home/edit">
+          <router-link :to="`/home/edit/${scope.row.id}`">
             <el-button type="text" size="small">编辑</el-button>
           </router-link>
           <el-button type="text" size="small" @click="deletePage" >删除</el-button>
@@ -62,18 +62,22 @@ export default {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄',
+        id: 111,
       }, {
         date: '2016-05-04',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1517 弄',
+        id: 222,
       }, {
         date: '2016-05-01',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1519 弄',
+        id: 333,
       }, {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄',
+        id: 444,
       }],
     }
   },

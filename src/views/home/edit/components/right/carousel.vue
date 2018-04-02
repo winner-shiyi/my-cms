@@ -16,8 +16,9 @@
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-if="item.imageUrl" :src="item.imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
         <el-form-item
@@ -62,6 +63,23 @@ export default {
       isArray: true,
     }
   },
+  mounted() {
+    const aa = [
+      {
+        uploadImage: '',
+        autoPlay: false,
+        link: '111',
+        imageUrl: 'http://img.mp.sohu.com/upload/20170817/0257976d0f384ed592e0b0b761c89834_th.png',
+      },
+      {
+        uploadImage: '',
+        autoPlay: false,
+        link: '222',
+        imageUrl: '',
+      },
+    ]
+    this.ruleForm.configItems = aa
+  },
   methods: {
     createdJson() {
       return {
@@ -83,7 +101,10 @@ export default {
       })
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
+      console.log('res----', res)
+      console.log('file----', file)
+      // todo 这里要使用watcher吗？
+      this.ruleForm.configItems[0].imageUrl = URL.createObjectURL(file.raw)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
@@ -98,21 +119,7 @@ export default {
       return isJPG && isLt2M
     },
   },
-  mounted() {
-    const aa = [
-      {
-        uploadImage: '',
-        autoPlay: false,
-        link: '111',
-      },
-      {
-        uploadImage: '',
-        autoPlay: false,
-        link: '222',
-      },
-    ]
-    this.ruleForm.configItems = aa
-  },
+
 }
 </script>
 <style lang="stylus" scoped>

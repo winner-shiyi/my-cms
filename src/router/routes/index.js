@@ -28,7 +28,7 @@ const routes = [
         component: resolve => require(['../../views/home/create.vue'], resolve),
       },
       {
-        path: 'edit',
+        path: 'edit/:id',
         name: 'home.edit',
         component: resolve => require(['../../views/home/edit/edit.vue'], resolve),
       },

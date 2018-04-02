@@ -8,14 +8,21 @@ class Apis extends Ajax {
    * @url http://172.16.2.71:8068/workspace/myWorkspace.action?projectId=59#4324
    */
   blogList(param) {
-    return super.post('/api/okr/editTime', param)
+    return super.post('/api/user/login', param)
   }
   /**
-   * xxxxx请求
-   * @url http://172.16.2.71:8068/workspace/myWorkspace.action?projectId=59#4324
+   * 创建新页面请求
+   * @url http://172.16.2.71:8068/workspace/myWorkspace.do?projectId=86#5312
    */
-  bbbb(param) {
-    return super.post('/api/dfdfdfdfdf', param)
+  createPage(param) {
+    return super.post('/api/page/create', param)
+  }
+  /**
+   * 编辑页面请求
+   * @url http://172.16.2.71:8068/workspace/myWorkspace.do?projectId=86#5314
+   */
+  getMobileData(param) {
+    return super.post('/api/page/detail', param)
   }
 }
 

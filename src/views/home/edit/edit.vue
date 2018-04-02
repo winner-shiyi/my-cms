@@ -85,6 +85,10 @@ export default {
   },
   data() {
     return {
+      // cms页面数据
+      tplData: {
+        id: this.$route.params.id,
+      },
       // 左侧组件列表
       modules: [
         {
@@ -128,9 +132,28 @@ export default {
     }
   },
   mounted() {
-    // todo
-    // this.blocks = mockBlocks
-    // console.log('this.blocks---', mockBlocks)
+    this.$ajax.getMobileData({pageId: this.tplData.id})
+      .then((result) => {
+        // this.blocks = result.moduleList
+      })
+      .catch((result) => {
+        console.log('result---', result)
+        // this.blocks = result.resultData.moduleList
+        // const aaData = {
+        //   id: ,
+        //   pageName:,
+        //   projectlist:[], 第一项是默认选中的值，
+        //   moduleList:[
+        //     id:,
+        //     type:"CAROUSEL",
+        //     status:,
+        //     list:[
+        //       pictureUrl:,
+        //     ]
+        //   ]
+        // }
+        // this.$message.error(err.msg)
+      })
   },
   computed: {
     isError() {

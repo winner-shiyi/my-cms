@@ -37,12 +37,9 @@
       </div>
     </div>
     <div class="blank"></div>
+    <el-button type="success" @click="clickFn">成功按钮</el-button>
     <footer class="footer">Copyright © 2018  产业互联技术中心</footer>
   </div>
-    <!-- <div class="demo">
-      登录页面
-      <el-button type="success" @click="clickFn">成功按钮</el-button>
-    </div> -->
 </template>
 
 <script>
@@ -73,7 +70,7 @@ export default {
       this.$ajax.blogList({aaa: 'ffff'}).then((data) => {
         console.log(data)
       }).catch((err) => {
-        console.log(err)
+        console.log('err---', err)
       })
     },
   },
