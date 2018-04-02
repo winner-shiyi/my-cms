@@ -10,16 +10,7 @@
               { required: true, message: '请上传图片', trigger: 'blur' },
             ]"
         >
-          <el-upload
-            class="avatar-uploader"
-            action="http://172.16.2.71:8068/mockjsdata/86/user/uploadImage"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="item.imageUrl" :src="item.imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
+          <upload-img :item="item"></upload-img>
         </el-form-item>
         <el-form-item
           label="跳转方式"
@@ -44,8 +35,22 @@
 </template>
 <script>
 // import uuid from 'uuid/v4'
+import uploadImg from './upload-img.vue'
 
 export default {
+  components: { uploadImg },
+  props: {
+    // 轮播图数据项集合
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    // 渲染数据包
+    item: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       ruleForm: {
@@ -59,26 +64,38 @@ export default {
       //     { required: true, message: '跳转地址不能为空', trigger: 'blur' },
       //   ],
       // },
-      imageUrl: '',
       isArray: true,
     }
   },
   mounted() {
-    const aa = [
-      {
-        uploadImage: '',
-        autoPlay: false,
-        link: '111',
-        imageUrl: 'http://img.mp.sohu.com/upload/20170817/0257976d0f384ed592e0b0b761c89834_th.png',
+    console.log('右侧轮播图---data', this.data)
+    console.log('右侧轮播图---item', this.item)
+    // const aa = [
+    //   {
+    //     uploadImage: '',
+    //     autoPlay: false,
+    //     link: '111',
+    //     pictureUrl: 'http://img.mp.sohu.com/upload/20170817/0257976d0f384ed592e0b0b761c89834_th.png',
+    //   },
+    //   {
+    //     uploadImage: '',
+    //     autoPlay: false,
+    //     link: '222',
+    //     pictureUrl: '',
+    //   },
+    // ]
+    // this.ruleForm.configItems = aa
+  },
+  watch: {
+    ruleForm: {
+      deep: true,
+      /**
+       * 监听数据变化，一旦有变就改变组件的状态为STORED
+       */
+      handler() {
+        this.item.status = 'STORED'
       },
-      {
-        uploadImage: '',
-        autoPlay: false,
-        link: '222',
-        imageUrl: '',
-      },
-    ]
-    this.ruleForm.configItems = aa
+    },
   },
   methods: {
     createdJson() {
@@ -86,6 +103,7 @@ export default {
         uploadImage: '',
         autoPlay: false,
         link: '',
+        pictureUrl: '',
       }
     },
     addItem() {
@@ -99,24 +117,6 @@ export default {
       }).then(() => {
         this.ruleForm.configItems.splice(index, 1)
       })
-    },
-    handleAvatarSuccess(res, file) {
-      console.log('res----', res)
-      console.log('file----', file)
-      // todo 这里要使用watcher吗？
-      this.ruleForm.configItems[0].imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
     },
   },
 
@@ -160,31 +160,5 @@ export default {
     border: 1px solid #20a0ff;
     color: #20a0ff;
     width : 70%;
-  }
-</style>
-
-<style lang="stylus">
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 106px;
-    height: 106px;
-    line-height: 106px;
-    text-align: center;
-  }
-  .avatar {
-    width: 106px;
-    height: 106px;
-    display: block;
   }
 </style>

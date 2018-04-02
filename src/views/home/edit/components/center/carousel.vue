@@ -17,6 +17,10 @@ export default {
       default: () => {},
     },
   },
+  mounted() {
+    console.log('中间图片---data', this.data)
+    console.log('中间图片---item', this.item)
+  },
 }
 </script>
 <style lang="stylus" scoped>

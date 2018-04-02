@@ -51,7 +51,9 @@
           <h2 class="title">{{ activeItem.id ? '内容配置': '页面配置'}}</h2>
           <cms-mobile-config
             v-if="activeItem.id"
-            :key="activeItem.id" :type="activeItem.type" :item="activeItem"
+            :key="activeItem.id"
+            :type="activeItem.type"
+            :item="activeItem"
           >
           </cms-mobile-config>
           <page-name-config v-else></page-name-config>
@@ -134,7 +136,7 @@ export default {
   mounted() {
     this.$ajax.getMobileData({pageId: this.tplData.id})
       .then((result) => {
-        console.log('result---', result)
+        // console.log('result---', result)
         // this.blocks = result.moduleList
       })
       .catch((err) => {

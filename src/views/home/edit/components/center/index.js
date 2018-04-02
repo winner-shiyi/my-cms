@@ -44,7 +44,7 @@ export default {
     if (!this.type) {
       return h('')
     }
-    const data = this.item.list || []
+    const data = (this.item || {}).list || []
     return h(this.kebabType, {
       props: {
         item: this.item,

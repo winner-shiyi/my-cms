@@ -60,6 +60,7 @@ comps.carousel = (opts = {}) => ({
   icon: 'banner',
   layout: 1,
   list: [{
+    pictureUrl: '',
     link: {
       type: 0,
       subtype: 0,
