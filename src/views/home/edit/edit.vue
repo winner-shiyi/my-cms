@@ -115,7 +115,7 @@ export default {
       // 中间手机模板的拖拽配置
       mobileOption: {
         group: {
-          name: 'list',
+          name: 'list', // 命名必须和mobileOption 中的group命名一致
           pull: false,
         },
       },
@@ -136,7 +136,7 @@ export default {
   mounted() {
     this.$ajax.getMobileData({pageId: this.tplData.id})
       .then((result) => {
-        // console.log('result---', result)
+        console.log('result---', result)
         // this.blocks = result.moduleList
       })
       .catch((err) => {

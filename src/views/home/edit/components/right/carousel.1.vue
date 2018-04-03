@@ -25,17 +25,6 @@
         <el-form-item label="自动播放" :prop="'configItems.' + index + '.autoPlay'">
           <el-switch v-model="item.autoPlay"></el-switch>
         </el-form-item>
-
-        <el-form-item
-          v-for="(item, index) in fields"
-          :key="index"
-          :label="item.label"
-          :prop="item.name"
-          :placeholder="`请填写${item.label}`"
-
-        >
-          {{item.type}}
-        </el-form-item>
         <span v-show="ruleForm.configItems.length > 1" class="close" @click.prevent="onRemove(index)"><i class="el-icon-delete"></i></span>
       </el-row>
       <el-form-item class="wrap-btn" v-show="isArray && ruleForm.configItems.length < 10">
@@ -70,31 +59,6 @@ export default {
   },
   data() {
     return {
-      fields: [
-        {
-          label: '上传图片',
-          name: 'pictureUrl',
-          required: true,
-          type: 'uploadImage',
-          placeholder: '请上传图片',
-        },
-        {
-          label: '跳转方式',
-          name: 'link',
-          required: true,
-          type: 'textarea',
-          max: 100,
-          long: true,
-          placeholder: '请输入关键结果',
-        },
-        {
-          label: '自动播放',
-          name: 'autoPlay',
-          required: false,
-          type: 'switch',
-          checked: false,
-        },
-      ],
       ruleForm: {
         // configItems: [this.createdJson()],
         configItems: this.item.list,

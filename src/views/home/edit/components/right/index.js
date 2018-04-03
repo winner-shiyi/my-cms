@@ -61,6 +61,7 @@ export default {
       props: {
         item: this.item,
         data,
+        type: this.type,
       },
       on: {
         submit: this.onSubmit,

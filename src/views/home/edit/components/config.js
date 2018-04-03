@@ -58,15 +58,10 @@ comps.carousel = (opts = {}) => ({
   status: 'INIT',
   name: '轮播图',
   icon: 'banner',
-  layout: 1,
   list: [{
     pictureUrl: '',
-    link: {
-      type: 0,
-      subtype: 0,
-      name: '',
-      content: '',
-    },
+    link: '',
+    autoPlay: false,
   }],
   ...opts,
 })
