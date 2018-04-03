@@ -57,8 +57,6 @@
 export default {
   data() {
     return {
-      title: '我是home',
-      list: [4, 5, 7],
       cmsPageValidateForm: {
         pageName: '',
         projectName: '',
@@ -73,23 +71,22 @@ export default {
         value: 'JavaScript',
         label: 'JavaScript',
       }],
-      // value10: [],
     }
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          const { pageName, projectName } = this.cmsPageValidateForm
           const param = {
-            pageName: '页面名称',
-            projectName: '项目名称',
+            pageName,
+            projectName,
           }
           this.$ajax.createPage(param).then((result) => {
-            // console.log('创建页面----', result)
-            // const id = result.resultData.id
-            // this.$router.push({path: `/home/edit/${id}`})
-          }).catch(() => {
-            // this.$message.error(err.msg)
+            const id = result.id
+            this.$router.push({path: `/home/edit/${id}`})
+          }).catch((err) => {
+            this.$message.error(err.msg)
           })
         } else {
           console.log('error submit!!')

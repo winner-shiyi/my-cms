@@ -31,13 +31,12 @@
             <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
           <el-form-item class="btn-item">
-            <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+            <el-button type="primary" @click="submitForm('loginForm')">登  录</el-button>
           </el-form-item>
         </el-form>
       </div>
     </div>
     <div class="blank"></div>
-    <el-button type="success" @click="clickFn">成功按钮</el-button>
     <footer class="footer">Copyright © 2018  产业互联技术中心</footer>
   </div>
 </template>
@@ -59,7 +58,11 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.$ajax.userLogin({}).then((result) => {
+            console.log(result)
+          }).catch((err) => {
+            this.$message.error(err.msg)
+          })
         } else {
           console.log('error submit!!')
           return false
