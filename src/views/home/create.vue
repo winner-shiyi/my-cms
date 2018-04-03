@@ -22,7 +22,7 @@
           clearable
           placeholder="请选择或新增项目">
           <el-option
-            v-for="item in options5"
+            v-for="item in projectData"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -61,16 +61,7 @@ export default {
         pageName: '',
         projectName: '',
       },
-      options5: [{
-        value: 'HTML',
-        label: 'HTML',
-      }, {
-        value: 'CSS',
-        label: 'CSS',
-      }, {
-        value: 'JavaScript',
-        label: 'JavaScript',
-      }],
+      projectData: [],
     }
   },
   methods: {
@@ -98,6 +89,13 @@ export default {
       this.$refs[formName].resetFields()
     },
   },
+  mounted() {
+    this.$ajax.queryProjectName({type: 'projectName'}).then((result) => {
+      this.projectData = result.list
+    }).catch((err) => {
+      this.$message.error(err.msg)
+    })
+  },
 }
 </script>
 
@@ -116,7 +114,7 @@ export default {
       padding-top 20px
     }
     .page-item{
-      width 440px
+      width 500px
     }
   }
 </style>

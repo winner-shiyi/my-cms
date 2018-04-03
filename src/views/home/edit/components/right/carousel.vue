@@ -27,14 +27,22 @@
         </el-form-item>
 
         <el-form-item
-          v-for="(item, index) in fields"
+          v-for="(item1, index) in fields"
           :key="index"
-          :label="item.label"
-          :prop="item.name"
-          :placeholder="`请填写${item.label}`"
+          :label="item1.label"
+          :prop="item1.name"
+          :placeholder="`请填写${item1.label}`"
 
         >
-          {{item.type}}
+          <template v-if="item1.type === 'uploadImage'">
+            <upload-img :item="item"></upload-img>
+          </template>
+          <template v-if="item1.type === 'textarea'">
+            textarea
+          </template>
+          <template v-if="item1.type === 'switch'">
+            switch
+          </template>
         </el-form-item>
         <span v-show="ruleForm.configItems.length > 1" class="close" @click.prevent="onRemove(index)"><i class="el-icon-delete"></i></span>
       </el-row>

@@ -19,15 +19,15 @@
       :data="tableData"
       style="width: 100%">
       <el-table-column
-        prop="name"
+        prop="pageName"
         label="页面名称">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="projectName"
         label="项目名称">
       </el-table-column>
       <el-table-column
-        prop="date"
+        prop="editTime"
         label="修改日期"
         width="180">
       </el-table-column>
@@ -35,10 +35,10 @@
         label="操作"
         width="180">
         <template slot-scope="scope">
-          <router-link :to="`/home/edit/${scope.row.id}`">
+          <router-link :to="`/home/edit/${scope.row.pageId}`">
             <el-button type="text" size="small">编辑</el-button>
           </router-link>
-          <el-button type="text" size="small" @click="deletePage" >删除</el-button>
+          <el-button type="text" size="small" @click="deletePage(scope.row.pageId)" >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,27 +58,7 @@ export default {
       list: [1, 3],
       input5: '',
       select: '',
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-        id: 111,
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄',
-        id: 222,
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄',
-        id: 333,
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄',
-        id: 444,
-      }],
+      tableData: [],
     }
   },
   computed: {
@@ -87,16 +67,21 @@ export default {
     },
   },
   methods: {
-    deletePage() {
+    deletePage(id) {
       this.$confirm('此操作将永久删除该模板, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
         // todo发送删除请求，请求成功后刷新列表页
-        this.$message({
-          type: 'success',
-          message: '删除成功!',
+        this.$ajax.deletePage({ pageId: id }).then((result) => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+          })
+          this.getPageData()
+        }).catch((err) => {
+          this.$message.error(err.msg)
         })
       }).catch(() => {
         this.$message({
@@ -105,6 +90,17 @@ export default {
         })
       })
     },
+    getPageData() {
+      const param = {}
+      this.$ajax.getPageList(param).then((result) => {
+        this.tableData = result.list
+      }).catch((err) => {
+        this.$message.error(err.msg)
+      })
+    },
+  },
+  mounted() {
+    this.getPageData()
   },
 }
 </script>

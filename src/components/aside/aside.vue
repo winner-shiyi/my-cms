@@ -10,7 +10,7 @@
       <i class="el-icon-menu"></i>
       <span slot="title">页面管理</span>
     </el-menu-item>
-    <el-menu-item index="/home/create">
+     <el-menu-item index="/home/create">
       <i class="el-icon-setting"></i>
       <span slot="title">创建页面</span>
     </el-menu-item>

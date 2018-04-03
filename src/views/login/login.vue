@@ -31,7 +31,7 @@
             <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
           <el-form-item class="btn-item">
-            <el-button type="primary" @click="submitForm('loginForm')">登  录</el-button>
+            <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -46,10 +46,8 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      msg: '登录页面',
       loginForm: {
         password: '',
-        checkPass: '',
         username: '',
       },
     }
@@ -60,6 +58,7 @@ export default {
         if (valid) {
           this.$ajax.userLogin({}).then((result) => {
             console.log(result)
+            this.$router.push({path: '/home'})
           }).catch((err) => {
             this.$message.error(err.msg)
           })
@@ -116,7 +115,8 @@ export default {
         flex 1
         padding 60px
         .el-button{
-          width 180px
+          width 100%
+          letter-spacing 10px
         }
         .title{
           font-size 25px

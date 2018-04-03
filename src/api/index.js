@@ -18,6 +18,27 @@ class Apis extends Ajax {
     return super.post('/api/page/create', param)
   }
   /**
+   * 删除页面请求
+   * @url http://172.16.2.71:8068/workspace/myWorkspace.do?projectId=86#5311
+   */
+  deletePage(param) {
+    return super.post('/api/page/delete', param)
+  }
+  /**
+   * 项目名称数据请求
+   * @url http://172.16.2.71:8068/workspace/myWorkspace.action?projectId=86#5315
+   */
+  queryProjectName(param) {
+    return super.post('/api/dictionary/query', param)
+  }
+  /**
+   * 页面列表数据请求
+   * @url http://172.16.2.71:8068/workspace/myWorkspace.do?projectId=86#5310
+   */
+  getPageList(param) {
+    return super.post('/api/page/list', param)
+  }
+  /**
    * 编辑页面请求
    * @url http://172.16.2.71:8068/workspace/myWorkspace.do?projectId=86#5314
    */
