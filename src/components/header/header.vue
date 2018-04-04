@@ -6,18 +6,33 @@
       </h1>
     </div>
     <div class="cms-header-slide">
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
           魏娜<i class="el-icon-caret-bottom"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>账号信息</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <!-- <el-dropdown-item>账号信息</el-dropdown-item> -->
+          <el-dropdown-item command="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    handleCommand(command) {
+      switch (command) {
+        case 'logout':
+          console.log(1111)
+          this.$router.push({path: '/login'})
+          break
+        default:
+      }
+    },
+  },
+}
+</script>
 <style lang="stylus" scoped>
   .header{
     width 100%

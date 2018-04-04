@@ -3,9 +3,9 @@
     <el-form :model="ruleForm" ref="ruleForm" label-width="80px">
       <el-row class="form-li" v-for="(item, index) in ruleForm.configItems" :key="index">
         <p class="count-box" v-show="isArray">第<span class="count">{{index + 1}}</span>个</p>
-        <el-form-item
+        <!-- <el-form-item
           label="上传图片"
-          :prop="'configItems.' + index + '.uploadImage'"
+          :prop="'configItems.' + index + '.pictureUrl'"
           :rules="[
               { required: true, message: '请上传图片', trigger: 'blur' },
             ]"
@@ -24,24 +24,29 @@
         </el-form-item>
         <el-form-item label="自动播放" :prop="'configItems.' + index + '.autoPlay'">
           <el-switch v-model="item.autoPlay"></el-switch>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item
-          v-for="(item1, index) in fields"
-          :key="index"
-          :label="item1.label"
-          :prop="item1.name"
-          :placeholder="`请填写${item1.label}`"
-
+          v-for="(field, fieldIndex) in fields"
+          :key="fieldIndex"
+          :label="field.label"
+          :prop="`configItems.${index}.${field.name}`"
+          :rules="[{ required: field.required, message: `${field.label}不能为空`, trigger: 'blur' }]"
         >
-          <template v-if="item1.type === 'uploadImage'">
+          <template v-if="field.type === 'uploadImage'">
             <upload-img :item="item"></upload-img>
           </template>
-          <template v-if="item1.type === 'textarea'">
-            textarea
+          <template v-if="field.type === 'textarea'">
+            <el-input type="textarea" v-model="item[field.name]" :placeholder="field.placeholder || `请填写${field.label}`"></el-input>
           </template>
-          <template v-if="item1.type === 'switch'">
-            switch
+          <template v-if="field.type === 'switch'">
+             <el-switch v-model="item[field.name]"></el-switch>
+          </template>
+          <template v-if="field.type === 'input'">
+             <el-input v-model="item[field.name]" :placeholder="field.placeholder || `请填写${field.label}`"></el-input>
+          </template>
+          <template v-if="field.type === 'number'">
+             <el-input-number v-model="item[field.name]" @change="handleChange" :min="field.min || 10" :max="field.max || 100" size="medium"></el-input-number>
           </template>
         </el-form-item>
         <span v-show="ruleForm.configItems.length > 1" class="close" @click.prevent="onRemove(index)"><i class="el-icon-delete"></i></span>
@@ -84,37 +89,42 @@ export default {
           name: 'pictureUrl',
           required: true,
           type: 'uploadImage',
-          placeholder: '请上传图片',
         },
         {
           label: '跳转方式',
           name: 'link',
           required: true,
           type: 'textarea',
-          max: 100,
-          long: true,
-          placeholder: '请输入关键结果',
+          rules: [
+            { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur, change' },
+          ],
         },
         {
           label: '自动播放',
           name: 'autoPlay',
           required: false,
           type: 'switch',
-          checked: false,
+        },
+        {
+          label: '标题',
+          name: 'title',
+          required: true,
+          type: 'input',
+          placeholder: '最多支持20个字',
+        },
+        {
+          label: '高度',
+          name: 'height',
+          required: false,
+          type: 'number',
+          num: 40,
+          max: 100,
+          min: 40,
         },
       ],
       ruleForm: {
-        // configItems: [this.createdJson()],
         configItems: this.item.list,
       },
-      // rules: {
-      //   uploadImage: [
-      //     { required: true, message: '图片不能为空', trigger: 'blur' },
-      //   ],
-      //   link: [
-      //     { required: true, message: '跳转地址不能为空', trigger: 'blur' },
-      //   ],
-      // },
       isArray: true,
     }
   },
@@ -143,6 +153,9 @@ export default {
         }
       })
       return baseFromItem
+    },
+    handleChange(value) {
+      console.log(value)
     },
     addItem() {
       // this.ruleForm.configItems.push(this.createdJson())

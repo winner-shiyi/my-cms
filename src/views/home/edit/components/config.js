@@ -62,6 +62,7 @@ comps.carousel = (opts = {}) => ({
     pictureUrl: '',
     link: '',
     autoPlay: false,
+    // height: 50, todo
   }],
   ...opts,
 })
