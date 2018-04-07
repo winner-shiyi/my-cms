@@ -73,7 +73,6 @@ import cmsMobileComps from './components/center/index.js'
 import wrapper from './components/center/wrapper.vue'
 import cmsMobileConfig from './components/right/index.js'
 import pageNameConfig from './components/right/page-config.vue'
-// import mockBlocks from './mock.js'
 import { baseComps, ghostImgs } from './components/config'
 
 export default {
