@@ -62,7 +62,7 @@ comps.carousel = (opts = {}) => ({
     pictureUrl: '',
     link: '',
     autoPlay: false,
-    // height: 50, todo
+    height: 50, // todo删掉
   }],
   ...opts,
 })

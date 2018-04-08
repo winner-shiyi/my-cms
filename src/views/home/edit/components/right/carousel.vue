@@ -117,9 +117,9 @@ export default {
           name: 'height',
           required: false,
           type: 'number',
-          num: 40,
+          num: 40, // 这里无用，一开始的默认值，要设置在config.js里的组件里的list里面
           max: 100,
-          min: 40,
+          min: 20,
         },
       ],
       ruleForm: {
