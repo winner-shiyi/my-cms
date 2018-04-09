@@ -5,6 +5,7 @@ import Header from './header/header.vue'
 import Main from './main/main.vue'
 import Footer from './footer/footer.vue'
 
+// 注册全局组件
 Vue.component('cms-layout', Layout)
 Vue.component('cms-aside', Aside)
 Vue.component('cms-header', Header)
